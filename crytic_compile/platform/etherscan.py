@@ -134,9 +134,9 @@ def _handle_multiple_files(
         Tuple[List[str], str]: filesnames, directory, where target_filename is the main file
     """
     if prefix:
-        directory = os.path.join(export_dir, f"{addr}{prefix}-{contract_name}")
+        directory = os.path.join(export_dir, f"{addr}{prefix}")
     else:
-        directory = os.path.join(export_dir, f"{addr}-{contract_name}")
+        directory = os.path.join(export_dir, f"{addr}")
 
     if "sources" in dict_source_code:
         # etherscan might return an object with a sources prop, which contains an object with contract names as keys
@@ -148,8 +148,8 @@ def _handle_multiple_files(
     filtered_paths: List[str] = []
     for filename, source_code in source_codes.items():
         path_filename = Path(filename)
-        if "contracts" in path_filename.parts and not filename.startswith("@"):
-            path_filename = Path(*path_filename.parts[path_filename.parts.index("contracts") :])
+        # if "contracts" in path_filename.parts and not filename.startswith("@"):
+        #     path_filename = Path(*path_filename.parts[path_filename.parts.index("contracts") :])
 
         filtered_paths.append(str(path_filename))
         path_filename = Path(directory, path_filename)
