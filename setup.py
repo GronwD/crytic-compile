@@ -9,7 +9,7 @@ with open("README.md", "r", encoding="utf8") as f:
 setup(
     name="crytic-compile",
     description="Util to facilitate smart contracts compilation.",
-    url="https://github.com/crytic/crytic-compile",
+    url="https://github.com/GronwD/crytic-compile",
     author="Trail of Bits",
     version="0.2.3",
     packages=find_packages(),
