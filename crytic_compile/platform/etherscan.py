@@ -108,14 +108,23 @@ def _handle_single_file(
         str: filename containing the source code
     """
     if prefix:
-        filename = os.path.join(export_dir, f"{addr}{prefix}-{contract_name}.sol")
+        directory = os.path.join(export_dir, f"{addr}{prefix}")
+        filename = f"{contract_name}.sol"
     else:
-        filename = os.path.join(export_dir, f"{addr}-{contract_name}.sol")
+        directory = os.path.join(export_dir, f"{addr}")
+        filename = f"{contract_name}.sol"
 
-    with open(filename, "w", encoding="utf8") as file_desc:
+    filtered_paths: List[str] = []
+    path_filename = Path(filename)
+    filtered_paths.append(str(path_filename))
+
+    path_filename = Path(directory, path_filename)
+    if not os.path.exists(path_filename.parent):
+        os.makedirs(path_filename.parent)
+    with open(path_filename, "w", encoding="utf8") as file_desc:
         file_desc.write(source_code)
 
-    return filename
+    return list(filtered_paths), directory
 
 
 def _handle_multiple_files(
@@ -314,9 +323,9 @@ class Etherscan(AbstractPlatform):
                     dict_source_code, addr, prefix, contract_name, export_dir
                 )
             except JSONDecodeError:
-                filenames = [
-                    _handle_single_file(source_code, addr, prefix, contract_name, export_dir)
-                ]
+                filenames, working_dir = _handle_single_file(
+                    source_code, addr, prefix, contract_name, export_dir
+                )
 
         compilation_unit = CompilationUnit(crytic_compile, contract_name)
 
