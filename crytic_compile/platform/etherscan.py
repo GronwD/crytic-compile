@@ -156,6 +156,9 @@ def _handle_multiple_files(
 
     filtered_paths: List[str] = []
     for filename, source_code in source_codes.items():
+        # some file names are like: /contracts/somefile.sol
+        if filename.startswith("/"):
+            filename = filename.lstrip("/")
         path_filename = Path(filename)
         # if "contracts" in path_filename.parts and not filename.startswith("@"):
         #     path_filename = Path(*path_filename.parts[path_filename.parts.index("contracts") :])
