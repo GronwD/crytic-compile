@@ -212,6 +212,9 @@ class Etherscan(AbstractPlatform):
             addr = target
             prefix = None
 
+        if prefix_bytecode != None:
+            dir_postfix = "." + prefix_bytecode # output file dir with site name postfix
+
         only_source = kwargs.get("etherscan_only_source_code", False)
         only_bytecode = kwargs.get("etherscan_only_bytecode", False)
 
@@ -317,18 +320,18 @@ class Etherscan(AbstractPlatform):
             # etherscan might return an object with two curly braces, {{ content }}
             dict_source_code = json.loads(source_code[1:-1])
             filenames, working_dir = _handle_multiple_files(
-                dict_source_code, addr, prefix_bytecode, contract_name, export_dir
+                dict_source_code, addr, dir_postfix, contract_name, export_dir
             )
         except JSONDecodeError:
             try:
                 # or etherscan might return an object with single curly braces, { content }
                 dict_source_code = json.loads(source_code)
                 filenames, working_dir = _handle_multiple_files(
-                    dict_source_code, addr, prefix_bytecode, contract_name, export_dir
+                    dict_source_code, addr, dir_postfix, contract_name, export_dir
                 )
             except JSONDecodeError:
                 filenames, working_dir = _handle_single_file(
-                    source_code, addr, prefix_bytecode, contract_name, export_dir
+                    source_code, addr, dir_postfix, contract_name, export_dir
                 )
 
         compilation_unit = CompilationUnit(crytic_compile, contract_name)
