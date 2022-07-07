@@ -199,6 +199,7 @@ class Etherscan(AbstractPlatform):
 
         target = self._target
 
+
         if target.startswith(tuple(SUPPORTED_NETWORK)):
             prefix: Union[None, str] = SUPPORTED_NETWORK[target[: target.find(":") + 1]][0]
             prefix_bytecode = SUPPORTED_NETWORK[target[: target.find(":") + 1]][1]
@@ -211,6 +212,7 @@ class Etherscan(AbstractPlatform):
             etherscan_bytecode_url = ETHERSCAN_BASE_BYTECODE % ("etherscan.io", target)
             addr = target
             prefix = None
+            prefix_bytecode = None
 
         if prefix_bytecode != None:
             dir_postfix = "." + prefix_bytecode # output file dir with site name postfix
