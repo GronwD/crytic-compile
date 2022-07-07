@@ -214,6 +214,7 @@ class Etherscan(AbstractPlatform):
             prefix = None
             prefix_bytecode = None
 
+        dir_postfix = None
         if prefix_bytecode != None:
             dir_postfix = "." + prefix_bytecode # output file dir with site name postfix
 
