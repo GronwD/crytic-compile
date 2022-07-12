@@ -315,6 +315,10 @@ class Etherscan(AbstractPlatform):
             r"\d+\.\d+\.\d+", _convert_version(result["CompilerVersion"])
         )[0]
 
+        compiler_version_file = open("tmpCompilerVersion", "w")
+        compiler_version_file.write(compiler_version)
+        compiler_version_file.close()
+
         optimization_used: bool = result["OptimizationUsed"] == "1"
 
         optimize_runs = None
