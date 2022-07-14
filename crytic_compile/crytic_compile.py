@@ -637,9 +637,9 @@ def compile_all(target: str, **kwargs: str) -> List[CryticCompile]:
             compilations.append(CryticCompile(target, **kwargs))
     elif os.path.isdir(target) or len(globbed_targets) > 0:
         # We create a new glob to find solidity files at this path (in case this is a directory)
-        filenames = glob.glob(os.path.join(target, "*.sol"))
+        filenames = glob.glob(os.path.join(target, "**", "*.sol"), recursive=True)
         if not filenames:
-            filenames = glob.glob(os.path.join(target, "*.vy"))
+            filenames = glob.glob(os.path.join(target, "**", "*.vy"), recursive=True)
             if not filenames:
                 filenames = globbed_targets
 
