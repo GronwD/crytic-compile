@@ -404,7 +404,10 @@ def _convert_version(version: str) -> str:
     Returns:
         str: converted version
     """
-    return version[1 : version.find("+")]
+    if version.find("+") == -1:
+        return version[1:]
+    else:
+        return version[1:version.find("+")]
 
 
 def _relative_to_short(relative: Path) -> Path:
